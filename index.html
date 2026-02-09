@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,51 +8,82 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="Styles.css">
 </head>
+
 <body>
+  <!-- Office Environment Elements -->
+  <div class="office-ceiling"></div>
+  <div class="office-floor"></div>
+  <div class="desk-area"></div>
+  <div class="office-window" id="officeWindow">
+    <!-- Sun/Moon outside window -->
+    <div class="window-sky">
+      <div class="sun-moon sun" id="sun"></div>
+      <div class="sun-moon moon" id="moon"></div>
+    </div>
+  </div>
+  <!-- Wall Clock -->
+  <div class="wall-clock" id="wallClock">
+    <div class="clock-hour"></div>
+    <div class="clock-minute"></div>
+  </div>
+  <div class="coffee-mug"></div>
+  <div class="office-plant"></div>
+
+  <!-- Theme Toggle -->
+  <button id="themeToggle" class="theme-toggle">
+    <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+    <svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+  </button>
+
+  <!-- Step Back Button - Should be SEPARATE from theme toggle -->
+  <button class="step-back-btn" id="stepBackBtn">
+    View Desktop
+  </button>
+
   <div class="content-wrapper">
     <!-- Header -->
-    <header class="glass sticky top-0 z-30 p-4 mb-6">
-      <div class="flex items-center justify-between max-w-7xl mx-auto">
-        <div class="logo">SYNCPULSE</div>
-        <div class="flex items-center gap-4">
-          <button id="teamToggle" class="btn-secondary btn text-sm py-2 px-4">
-            <span>👥 Team</span>
-          </button>
-          <button id="notificationBtn" class="relative">
-            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" style="display: none;">0</span>
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo">Do<span>Gether</span></div>
+        <div class="header-actions">
+          <nav class="header-nav">
+            <a href="#" class="nav-link">Board</a>
+            <a href="#" class="nav-link">Team Activity</a>
+            <a href="#" class="nav-link">Insights</a>
+          </nav>
+          <button id="teamToggle" class="team-toggle-btn">
+            Team View
           </button>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 pb-24">
-      <!-- Eisenhower Matrix -->
-      <div class="matrix-container">
-        <!-- Urgent & Important -->
-        <div class="matrix-quadrant glass urgent-important">
-          <div class="quadrant-title" style="color: var(--vivid-crimson);">🔥 Urgent & Important</div>
+    <main class="main-content">
+      <div class="board-container">
+        <div class="board-quadrant">
+          <div class="quadrant-header">🔴 Critical & Urgent</div>
           <div id="urgentImportant" class="task-list"></div>
         </div>
 
-        <!-- Schedule -->
-        <div class="matrix-quadrant glass schedule">
-          <div class="quadrant-title" style="color: var(--electric-blue);">📅 Schedule</div>
+        <div class="board-quadrant">
+          <div class="quadrant-header">📅 Strategic Planning</div>
           <div id="schedule" class="task-list"></div>
         </div>
 
-        <!-- Delegate -->
-        <div class="matrix-quadrant glass delegate">
-          <div class="quadrant-title" style="color: var(--emerald-green);">🤝 Delegate</div>
+        <div class="board-quadrant">
+          <div class="quadrant-header">🤝 Team Delegation</div>
           <div id="delegate" class="task-list"></div>
         </div>
 
-        <!-- Eliminate -->
-        <div class="matrix-quadrant glass eliminate">
-          <div class="quadrant-title" style="color: #999;">🗑️ Eliminate</div>
+        <div class="board-quadrant">
+          <div class="quadrant-header">⚪ Secondary / Backlog</div>
           <div id="eliminate" class="task-list"></div>
         </div>
       </div>
@@ -59,34 +91,38 @@
 
     <!-- Team Sidebar -->
     <aside id="teamSidebar" class="team-sidebar glass-strong">
-      <h3 class="text-lg font-semibold mb-4" style="font-family: 'Orbitron', sans-serif;">Active Team</h3>
-      <div id="teamList"></div>
+      <h3 class="sidebar-title">Active Team</h3>
+      <div id="teamList" class="team-list-container"></div>
     </aside>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav glass">
       <div class="nav-item active">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
         <span class="nav-label">Dashboard</span>
       </div>
       <div class="nav-item">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
         <span class="nav-label">Analytics</span>
       </div>
       <div class="nav-item">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
         <span class="nav-label">Team</span>
       </div>
       <div class="nav-item">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
         <span class="nav-label">Settings</span>
       </div>
@@ -94,7 +130,7 @@
 
     <!-- FAB -->
     <button id="addTaskBtn" class="fab">
-      <svg width="32" height="32" fill="none" stroke="#000" stroke-width="3" viewBox="0 0 24 24">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
       </svg>
     </button>
@@ -102,9 +138,9 @@
     <!-- Add Task Modal -->
     <div id="modalOverlay" class="modal-overlay">
       <div class="modal glass-strong">
-        <h2 class="text-2xl font-bold mb-6" style="font-family: 'Orbitron', sans-serif;">Create New Task</h2>
-        
-        <form id="taskForm">
+        <h2 class="modal-title">Create New Task</h2>
+
+        <form id="taskForm" class="task-form">
           <div class="form-group">
             <label class="form-label">Task Name</label>
             <input type="text" id="taskName" class="form-input" placeholder="Enter task description..." required>
@@ -115,7 +151,7 @@
             <select id="taskPriority" class="form-select" required>
               <option value="">Select priority...</option>
               <option value="urgent">🔥 Urgent & Important</option>
-              <option value="schedule">📅 Schedule</option>
+              <option value="schedule">📆 Schedule</option>
               <option value="delegate">🤝 Delegate</option>
               <option value="eliminate">🗑️ Eliminate</option>
             </select>
@@ -129,12 +165,17 @@
             </select>
           </div>
 
-          <div class="flex gap-3 mt-8">
-            <button type="submit" class="btn btn-primary flex-1">
-              <span style="position: relative; z-index: 1;">Create Task</span>
+          <div class="form-group">
+            <label class="form-label">Deadline (Optional)</label>
+            <input type="datetime-local" id="taskDeadline" class="form-input">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Create Task
             </button>
-            <button type="button" id="cancelBtn" class="btn btn-secondary flex-1">
-              <span style="position: relative; z-index: 1;">Cancel</span>
+            <button type="button" id="cancelBtn" class="btn btn-secondary">
+              Cancel
             </button>
           </div>
         </form>
@@ -144,8 +185,8 @@
     <!-- Notification Toast -->
     <div id="notificationToast" class="notification-toast glass-strong">
       <div class="notification-header">
-        <div class="notification-title">⚡ New Task Assigned</div>
-        <div class="notification-close" id="closeNotification">✕</div>
+        <div class="notification-title">🔔 New Task Assigned</div>
+        <button class="notification-close" id="closeNotification">✕</button>
       </div>
       <div class="notification-body" id="notificationBody">
         You have been assigned a new task.
@@ -157,6 +198,7 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="App.js"></script>
 </body>
+
 </html>
